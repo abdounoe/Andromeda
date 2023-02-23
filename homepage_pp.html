@@ -1,0 +1,232 @@
+<!DOCTYPE html><html><head>
+  <title>Homepage</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script id="refreshed_div">var predictions = [[{"Sets":"5Set","Match":"AlexanderYaskevich vs AlexeyEvtyushin","1Set":"5,11","2Set":"11,8","3Set":"6,11","4Set":"6,11","5Set":"0,0","6Set":"0,0","7Set":"0,0","Total points":"1,3","Tournament":"Masters"},1,0],[{"Sets":"7Set","Match":"VladimirDubovik vs VladislavSizonenko","1Set":"9,11","2Set":"4,11","3Set":"10,12","4Set":"11,4","5Set":"11,5","6Set":"11,3","7Set":"1,5","Total points":"3,3","Tournament":"Masters"},0,0],[{"Sets":"2Set","Match":"VladimirKovalevich vs EvgeniiKhotian","1Set":"6,11","2Set":"0,0","3Set":"0,0","4Set":"0,0","5Set":"0,0","6Set":"0,0","7Set":"0,0","Total points":"0,1","Tournament":"Masters"},1,0],[{"Sets":"2Set","Match":"EgorBardin vs AlexeyDemidov","1Set":"6,11","2Set":"0,0","3Set":"0,0","4Set":"0,0","5Set":"0,0","6Set":"0,0","7Set":"0,0","Total points":"0,1","Tournament":"Masters"},1,0]] ; </script><style>
+
+
+  thead {
+      /* set the height of the thead */
+      overflow: hidden;
+      background-color: transparent;
+      position: relative; /* Change this to fixed position */
+      top: 0; /* Position the navbar at the top of the page */
+        /* Set theFull width */
+      z-index: 1; /* Add a z-index to ensure the thead is on top of other elements */
+  }
+
+  thead th:hover {
+
+    background-color: #233883 ;
+    color: #f2f2f2;
+
+  }
+
+  @media screen and (max-width: 767px) {
+      .sidenav {
+          height: auto;
+          padding: 15px;
+      }
+      .row.content {height:auto;}
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #b9b9b9 ;
+    border-radius: 10%;
+
+
+    /* color: #a2eefb ; */
+
+  }
+
+  /* Style the table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+
+  /* Style the table headings */
+  th {
+    background-color: #7E5DFF ;
+    color: #f2f2f2;
+    padding: 12px;
+    top: 0px;
+    position: sticky ;
+    z-index: 2;
+    text-align: left;
+
+
+
+  }
+
+
+  /* Style the table cells */
+  td {
+
+    border: 2px solid rgb(161, 159, 159);
+    padding: 12px ;
+    text-align: center ;
+    z-index: 0;
+
+  }
+
+  
+  td:hover {
+    border-radius: 0px;
+  }
+
+
+  /* Style the table rows on hover */
+  tr:hover {
+    background-color: #d0c6fd;
+    background-color: #ffd0e8;
+
+  }
+
+</style></head>
+
+
+
+
+
+
+
+
+
+<body>
+
+
+  <table id="predictions-table">
+    <thead>
+      <tr class="tr_header">
+        <th>Tournament</th>
+        <th>Match</th>
+        <th>Min</th>
+        <th>Max</th>
+        <th>Total Points</th>
+        <th>1Sets</th>
+        <th>2Sets</th>
+        <th>3Sets</th>
+        <th>4Sets</th>
+        <th>5Sets</th>
+        <th>6Sets</th>
+        <th>7Sets</th>
+
+
+      </tr>
+    </thead>
+    <tbody>
+      <script>
+
+        // loop through the predictions
+        for (var i = 0; i < predictions.length; i++) {
+          var match = predictions[i][0];
+          var player1Score = predictions[i][1];
+          var player2Score = predictions[i][2];
+
+          var row = document.createElement("tr");
+
+          var tournamentCell = document.createElement("td");
+          tournamentCell.innerHTML = match.Tournament+"\n"+match.Sets;
+          row.appendChild(tournamentCell);
+
+
+          var matchCell = document.createElement("td");
+          matchCell.innerHTML = match.Match;
+          row.appendChild(matchCell);
+
+          var player1Cell = document.createElement("td");
+          player1Cell.innerHTML = player1Score;
+          row.appendChild(player1Cell);
+
+          var player2Cell = document.createElement("td");
+          player2Cell.innerHTML = player2Score;
+          row.appendChild(player2Cell);
+
+
+          var totalPointsCell = document.createElement("td");
+          totalPointsCell.innerHTML = match["Total points"];
+          row.appendChild(totalPointsCell);
+
+          var currentSet=match.Sets ;
+          var valueCurrentSetPlayer1= parseInt( match[currentSet].split(",")[0] ) ;
+          var valueCurrentSetPlayer2= parseInt( match[currentSet].split(",")[1] ) ;
+
+          valueCurrentSet=valueCurrentSetPlayer1+valueCurrentSetPlayer2;
+
+
+          for (var j=1; j<=7; j++){
+            var set = j+"Set";
+            var setsCell = document.createElement("td");
+            
+            setsCell.innerHTML = match[set];
+            p1=parseInt(match[currentSet].split(",")[0]);
+            p2=parseInt(match[currentSet].split(",")[1]);
+
+            setsCell.style.borderRadius = "20px"
+            if ( currentSet == set )  {
+
+                // setsCell.style.backgroundColor = "#a2eefb" ;
+                // setsCell.style.color = "#fff" ;
+
+                if ( player1Score==1 && Math.max(p1,p2)<5 )
+                {
+                  if ( Math.min(p1,p2)<2  ) {
+                  
+                  matchCell.style.color = "#fff" ;
+                  matchCell.style.backgroundColor = "#21B2E4" ;
+                  row.style.backgroundColor = "#2ee421" ;
+                  }
+
+                  else if (Math.min(p1,p2)>4) {
+
+                  row.style.backgroundColor = "#ffd0e8" ;
+
+                  }
+                  setsCell.style.backgroundColor = "#21B2E4" ;
+                  setsCell.style.color = "#fff" ;
+                  
+
+
+              };
+
+              };
+          
+            row.appendChild(setsCell);
+
+          };
+
+          // add the row to the table body
+          document.getElementById("predictions-table").getElementsByTagName("tbody")[0].appendChild(row);
+        }
+      </script>
+
+    </tbody>
+  </table>
+
+
+
+  <!--  
+  <td>
+    <select name="sortcol">
+      <script id="list_championships">var list_championships = ["Masters","MasterWomen","ArtCup","ProSpinSeries","ProSpinSeriesWomen","ProLeagueTcheque","ProLeague","TchequeTTStarSeries","ChampionatArmenieITTCupGroupeA","TournoiInternationalDohaFemme","AtrCup","WinCup","SkeptaCup"] ; </script>
+      <option value="0" selected="">Championships</option>
+      <script>
+      for (var i = 0; i < list_championships.length; i++) {
+        var option = document.createElement("option");
+        option.text = list_championships[i];
+        option.value = i +1;
+        document.querySelector("select").appendChild(option);
+      }
+      </script>
+    </select>
+  </td>
+-->
+
+</body></html>
